@@ -5,13 +5,21 @@ import java.util.Set;
 
 import com.application.enums.LiteraryCategory;
 
-public class BookDTO {
+public class BookCreateDTO {
 	private Integer id;
 	private String title;
 	private LocalDate year;
 	private String isbn;
 	private LiteraryCategory category;
-	private Set<String> authors;
+	private Set<Integer> authorIds;
+
+	public Set<Integer> getAuthorIds() {
+		return authorIds;
+	}
+
+	public void setAuthorIds(Set<Integer> authorIds) {
+		this.authorIds = authorIds;
+	}
 
 	public Integer getId() {
 		return id;
@@ -51,14 +59,6 @@ public class BookDTO {
 
 	public void setCategory(LiteraryCategory category) {
 		this.category = category;
-	}
-
-	public Set<String> getAuthors() {
-		return authors;
-	}
-
-	public void setAuthors(Set<String> authors) {
-		this.authors = authors;
 	}
 
 }

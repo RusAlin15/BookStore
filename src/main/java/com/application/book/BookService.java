@@ -1,10 +1,13 @@
 package com.application.book;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.application.author.Author;
+import com.application.author.AuthorRepository;
 import com.application.exception.ResourceNotFoundException;
 
 @Service
@@ -12,8 +15,19 @@ public class BookService {
 
 	@Autowired
 	private BookRepository bookRepository;
+	@Autowired
+	private AuthorRepository authorRepository;
 
-	public Book createBook(Book book) {
+	public Book createBook(Book book, Set<Integer> authorIds) {
+		Set<Author> authors = authorRepository.findByIdIn(authorIds);
+
+		if (authorIds.size() != authors.size()) {
+			throw new ResourceNotFoundException("Author", "Ids", authorIds);
+		}
+
+		authors.forEach(author -> author.addBook(book));
+		book.setLinkedAuthors(authors);
+
 		return bookRepository.saveAndFlush(book);
 	}
 
@@ -21,7 +35,7 @@ public class BookService {
 		return bookRepository.findAll();
 	}
 
-	public Book getBookById(Integer id) {
+	public Book getBookById(Integer id) throws ResourceNotFoundException {
 		return bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book", "Id", id));
 	}
 

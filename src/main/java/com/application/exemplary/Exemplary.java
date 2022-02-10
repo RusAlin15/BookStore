@@ -1,7 +1,9 @@
 package com.application.exemplary;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,11 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.application.appointment.Appointment;
 import com.application.book.Book;
 import com.application.enums.Language;
-import com.application.publishingHouse.PublishingHouse;
+import com.application.publishing.PublishingHouse;
 
 @Entity(name = "exemplary")
 @Table(name = "exemplary", schema = "administration")
@@ -35,7 +39,7 @@ public class Exemplary {
 	@Column(name = "page_numbers", nullable = false)
 	private Integer pageNumbers;
 
-	@Column(name = "language", nullable = false)
+	@Column(name = "language")
 	@Enumerated(EnumType.STRING)
 	private Language language;
 
@@ -47,19 +51,30 @@ public class Exemplary {
 	@JoinColumn(name = "publishing_house_id")
 	private PublishingHouse publishingHouse;
 
+	@OneToMany(mappedBy = "exemplary", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Appointment> appointments;
+
 	public Integer getId() {
 		return id;
+	}
+
+	public Set<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(Set<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public LocalDate getDate() {
+	public LocalDate getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setPublishedDate(LocalDate date) {
 		this.publishedDate = date;
 	}
 
@@ -101,6 +116,10 @@ public class Exemplary {
 
 	public void setPublishingHouse(PublishingHouse publishingHouse) {
 		this.publishingHouse = publishingHouse;
+	}
+
+	public void addAppointment(Appointment appointment) {
+		this.appointments.add(appointment);
 	}
 
 }

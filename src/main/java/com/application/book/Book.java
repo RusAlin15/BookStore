@@ -9,9 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.application.author.Author;
 import com.application.enums.LiteraryCategory;
 import com.application.exemplary.Exemplary;
 
@@ -37,6 +39,9 @@ public class Book {
 
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Exemplary> exemplaries;
+
+	@ManyToMany(mappedBy = "books")
+	private Set<Author> linkedAuthors;
 
 	public void addExemplary(Exemplary exemplary) {
 		this.exemplaries.add(exemplary);
@@ -94,6 +99,14 @@ public class Book {
 
 	public void setCategory(LiteraryCategory category) {
 		this.category = category;
+	}
+
+	public Set<Author> getLinkedAuthors() {
+		return linkedAuthors;
+	}
+
+	public void setLinkedAuthors(Set<Author> linkedAuthors) {
+		this.linkedAuthors = linkedAuthors;
 	}
 
 }

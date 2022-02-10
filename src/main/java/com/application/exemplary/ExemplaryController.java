@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.application.exception.ResourceNotFoundException;
 import com.application.exemplary.dto.ExemplaryDTO;
 import com.application.exemplary.dto.ExemplaryMapper;
 
@@ -26,10 +27,20 @@ public class ExemplaryController {
 	@Autowired
 	private ExemplaryMapper exemplaryMapper;
 
-	@PostMapping("/add/{bookId}/{publisingHouseId}")
+	@PostMapping("/{bookId}/{publisingHouseId}")
 	public ResponseEntity<ExemplaryDTO> createExemplary(@PathVariable Integer bookId,
-			@PathVariable Integer publisingHouseId, @RequestBody ExemplaryDTO exemplaryDTO) {
+			@PathVariable Integer publisingHouseId, @RequestBody ExemplaryDTO exemplaryDTO)
+			throws ResourceNotFoundException {
 		Exemplary createdExemplary = exemplaryService.createExemplary(bookId, publisingHouseId,
+				exemplaryMapper.exemplaryDTO2Exemplary(exemplaryDTO));
+		return new ResponseEntity<ExemplaryDTO>(exemplaryMapper.exemplary2ExemplaryDTO(createdExemplary),
+				HttpStatus.CREATED);
+	}
+
+	@PostMapping("/{publisingHouseId}")
+	public ResponseEntity<ExemplaryDTO> createExemplary(@PathVariable Integer publisingHouseId,
+			@RequestBody ExemplaryDTO exemplaryDTO) throws ResourceNotFoundException {
+		Exemplary createdExemplary = exemplaryService.createExemplary(publisingHouseId,
 				exemplaryMapper.exemplaryDTO2Exemplary(exemplaryDTO));
 		return new ResponseEntity<ExemplaryDTO>(exemplaryMapper.exemplary2ExemplaryDTO(createdExemplary),
 				HttpStatus.CREATED);
@@ -43,6 +54,12 @@ public class ExemplaryController {
 	@DeleteMapping("/{exemplaryId}")
 	public void deleteExemplary(@PathVariable Integer exemplaryId) {
 		exemplaryService.deleteExemplary(exemplaryId);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<ExemplaryDTO>> getExemplaries() {
+		return new ResponseEntity<List<ExemplaryDTO>>(
+				exemplaryMapper.exemplaryList2Exemplary(exemplaryService.getExemplaries()), HttpStatus.OK);
 	}
 
 }

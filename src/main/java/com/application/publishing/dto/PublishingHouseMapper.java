@@ -1,19 +1,20 @@
-package com.application.publishingHouse.dto;
+package com.application.publishing.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import com.application.publishingHouse.PublishingHouse;
+import com.application.publishing.PublishingHouse;
 
-@Service
+@Component
 public class PublishingHouseMapper {
 
 	public PublishingHouse houseDTO2House(PublishingHouseDTO houseDTO) {
 		PublishingHouse house = new PublishingHouse();
 		house.setId(houseDTO.getId());
 		house.setName(houseDTO.getName());
+		house.setAddress(houseDTO.getAddress());
 		return house;
 	}
 
@@ -21,6 +22,7 @@ public class PublishingHouseMapper {
 		PublishingHouseDTO houseDTO = new PublishingHouseDTO();
 		houseDTO.setId(house.getId());
 		houseDTO.setName(house.getName());
+		houseDTO.setAddress(house.getAddress());
 		return houseDTO;
 	}
 

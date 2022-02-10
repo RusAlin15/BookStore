@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.application.author.dto.AuthorDTO;
 import com.application.author.dto.AuthorMapper;
+import com.application.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/authors")
@@ -38,8 +39,9 @@ public class AuthorController {
 	}
 
 	@GetMapping("/id/{id}")
-	public AuthorDTO getAuthorById(@PathVariable Integer id) {
-		return authorMapper.author2authorDTO(authorService.getAuthorById(id));
+	public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Integer id) {
+		return new ResponseEntity<AuthorDTO>(authorMapper.author2authorDTO(authorService.getAuthorById(id)),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/name/{name}")
@@ -63,7 +65,8 @@ public class AuthorController {
 	}
 
 	@PutMapping("/{id}")
-	public AuthorDTO updateAuthor(@RequestBody AuthorDTO authorDTO, @PathVariable Integer id) {
+	public AuthorDTO updateAuthor(@RequestBody AuthorDTO authorDTO, @PathVariable Integer id)
+			throws ResourceNotFoundException {
 		Author author = authorMapper.authorDTO2author(authorDTO);
 		return authorMapper.author2authorDTO(authorService.updateAuthorById(author, id));
 	}

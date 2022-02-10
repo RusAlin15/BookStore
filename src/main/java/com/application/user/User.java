@@ -1,11 +1,17 @@
 package com.application.user;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.application.appointment.Appointment;
 
 @Entity
 @Table(name = "user", schema = "administration")
@@ -27,6 +33,9 @@ public class User {
 
 	@Column(name = "address")
 	private String address;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Appointment> appointments;
 
 	public Integer getId() {
 		return id;
@@ -67,4 +76,17 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public Set<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(Set<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public void addAppointment(Appointment appointment) {
+		this.appointments.add(appointment);
+	}
+
 }

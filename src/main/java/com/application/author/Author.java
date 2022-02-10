@@ -1,6 +1,7 @@
 package com.application.author;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +10,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.application.book.Book;
 import com.application.enums.Gender;
 import com.application.enums.Nationality;
 
@@ -38,6 +43,10 @@ public class Author {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "nationality", nullable = false)
 	private Nationality nationality;
+
+	@ManyToMany
+	@JoinTable(name = "author_book", schema = "administration", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+	private Set<Book> books;
 
 	public Integer getId() {
 		return id;
@@ -87,4 +96,15 @@ public class Author {
 		this.nationality = nationality;
 	}
 
+	public Set<Book> getBooks() {
+		return books;
+	}
+
+	public void setLinkedBooks(Set<Book> linkedBooks) {
+		this.books = linkedBooks;
+	}
+
+	public void addBook(Book book) {
+		this.books.add(book);
+	}
 }

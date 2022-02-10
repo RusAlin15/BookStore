@@ -1,4 +1,4 @@
-package com.application.publishingHouse;
+package com.application.publishing;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.application.publishingHouse;
+package com.application.publishing;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.publishingHouse.dto.PublishingHouseDTO;
-import com.application.publishingHouse.dto.PublishingHouseMapper;
+import com.application.publishing.dto.PublishingHouseDTO;
+import com.application.publishing.dto.PublishingHouseMapper;
 
 @RestController
-@RequestMapping(name = "/publishing")
+@RequestMapping("/publish")
 public class PublishingHouseControler {
 
 	@Autowired

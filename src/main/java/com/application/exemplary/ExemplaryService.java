@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.application.book.Book;
 import com.application.book.BookService;
-import com.application.publishingHouse.PublishingHouse;
-import com.application.publishingHouse.PublishingHouseService;
+import com.application.exception.ResourceNotFoundException;
+import com.application.publishing.PublishingHouse;
+import com.application.publishing.PublishingHouseService;
 
 @Service
 public class ExemplaryService {
@@ -20,7 +21,8 @@ public class ExemplaryService {
 	@Autowired
 	private PublishingHouseService publishingHouseService;
 
-	public Exemplary createExemplary(Integer bookId, Integer publishingHouseId, Exemplary exemplary) {
+	public Exemplary createExemplary(Integer bookId, Integer publishingHouseId, Exemplary exemplary)
+			throws ResourceNotFoundException {
 		Book book = bookService.getBookById(bookId);
 		book.addExemplary(exemplary);
 		PublishingHouse publishingHouse = publishingHouseService.getPublishingHouseById(publishingHouseId);
@@ -39,5 +41,20 @@ public class ExemplaryService {
 		 * administartion.exemplary INNER JOIN administration.book ON exemplary.book_id
 		 * = book.id WHERE book.id = :bookId
 		 */
+	}
+
+	public Exemplary createExemplary(Integer publisingHouseId, Exemplary exemplary) {
+		PublishingHouse publishingHouse = publishingHouseService.getPublishingHouseById(publisingHouseId);
+		exemplary.setPublishingHouse(publishingHouse);
+		return exemplaryRepository.saveAndFlush(exemplary);
+	}
+
+	public List<Exemplary> getExemplaries() {
+		return exemplaryRepository.findAll();
+	}
+
+	public Exemplary getExemplaryById(Integer exemplaryId) {
+		return exemplaryRepository.findById(exemplaryId)
+				.orElseThrow(() -> new ResourceNotFoundException("Exemplary", "Id", exemplaryId));
 	}
 }

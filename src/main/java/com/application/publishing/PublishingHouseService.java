@@ -1,4 +1,4 @@
-package com.application.publishingHouse;
+package com.application.publishing;
 
 import java.util.List;
 

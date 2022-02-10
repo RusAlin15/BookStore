@@ -1,8 +1,9 @@
-package com.application.publishingHouse.dto;
+package com.application.publishing.dto;
 
 public class PublishingHouseDTO {
 	private Integer id;
 	private String name;
+	private String address;
 
 	public Integer getId() {
 		return id;
@@ -18,6 +19,14 @@ public class PublishingHouseDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

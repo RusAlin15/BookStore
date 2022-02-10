@@ -3,11 +3,11 @@ package com.application.author.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.application.author.Author;
 
-@Service
+@Component
 public class AuthorMapper {
 
 	public Author authorDTO2author(AuthorDTO authorDTO) {

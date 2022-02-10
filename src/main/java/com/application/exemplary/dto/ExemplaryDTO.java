@@ -2,12 +2,14 @@ package com.application.exemplary.dto;
 
 import java.time.LocalDate;
 
+import com.application.enums.Language;
+
 public class ExemplaryDTO {
 	private Integer id;
-	private LocalDate date;
+	private LocalDate publishedDate;
 	private String code;
 	private Integer pageNumbers;
-	private String language;
+	private Language language;
 
 	public Integer getId() {
 		return id;
@@ -17,12 +19,12 @@ public class ExemplaryDTO {
 		this.id = id;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getPublishedDate() {
+		return publishedDate;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setPublishedDate(LocalDate publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 
 	public String getCode() {
@@ -39,6 +41,14 @@ public class ExemplaryDTO {
 
 	public void setPageNumbers(Integer pageNumbers) {
 		this.pageNumbers = pageNumbers;
+	}
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
 	}
 
 }
