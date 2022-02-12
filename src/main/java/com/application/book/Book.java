@@ -41,7 +41,7 @@ public class Book {
 	private Set<Exemplary> exemplaries;
 
 	@ManyToMany(mappedBy = "books")
-	private Set<Author> linkedAuthors;
+	private Set<Author> authors;
 
 	public void addExemplary(Exemplary exemplary) {
 		this.exemplaries.add(exemplary);
@@ -101,12 +101,12 @@ public class Book {
 		this.category = category;
 	}
 
-	public Set<Author> getLinkedAuthors() {
-		return linkedAuthors;
+	public Set<Author> getAuthors() {
+		return authors;
 	}
 
-	public void setLinkedAuthors(Set<Author> linkedAuthors) {
-		this.linkedAuthors = linkedAuthors;
+	public void setAuthors(Set<Author> linkedAuthors) {
+		this.authors = linkedAuthors;
 	}
 
 }

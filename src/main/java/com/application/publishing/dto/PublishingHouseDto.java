@@ -1,6 +1,6 @@
 package com.application.publishing.dto;
 
-public class PublishingHouseDTO {
+public class PublishingHouseDto {
 	private Integer id;
 	private String name;
 	private String address;

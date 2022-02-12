@@ -13,11 +13,6 @@ public class PublishingHouseService {
 	@Autowired
 	private PublishingHouseRepository houseRepository;
 
-	public PublishingHouse getPublishingHouseById(Integer publishingHouseId) {
-		return houseRepository.findById(publishingHouseId)
-				.orElseThrow(() -> new ResourceNotFoundException("PublishingHouse", "Id", publishingHouseId));
-	}
-
 	public PublishingHouse createHouse(PublishingHouse house) {
 		return houseRepository.saveAndFlush(house);
 	}
@@ -26,4 +21,16 @@ public class PublishingHouseService {
 		return houseRepository.findAll();
 	}
 
+	public PublishingHouse getPublishingHouseById(Integer publishingHouseId) {
+		return houseRepository.findById(publishingHouseId)
+				.orElseThrow(() -> new ResourceNotFoundException("PublishingHouse", "Id", publishingHouseId));
+	}
+
+	public void deleteHouseById(Integer publishingHouseId) {
+		try {
+			houseRepository.deleteById(publishingHouseId);
+		} catch (Exception e) {
+			throw new ResourceNotFoundException("PublishingHouse", "Id", publishingHouseId);
+		}
+	}
 }

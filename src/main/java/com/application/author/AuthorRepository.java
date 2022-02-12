@@ -16,4 +16,5 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
 	public Set<Author> findByIdIn(Set<Integer> authorIds);
 
 	public Author findByName(String name);
+
 }

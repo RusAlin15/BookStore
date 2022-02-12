@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import com.application.enums.Gender;
 import com.application.enums.Nationality;
 
-public class AuthorDTO {
+public class AuthorCreateDto {
 	private Integer id;
 	private String name;
 	private LocalDate birthDate;
 	private LocalDate deathDate;
-	private Gender gender;
 	private Nationality nationality;
+	private Gender gender;
 
 	public Integer getId() {
 		return id;

@@ -2,10 +2,8 @@ package com.application.appointment.dto;
 
 import java.time.LocalDate;
 
-public class AppointmentDTO {
+public class AppointmentCreateDto {
 	private Integer Id;
-	private LocalDate startDate;
-	private LocalDate endDate;
 
 	public Integer getId() {
 		return Id;
@@ -14,6 +12,11 @@ public class AppointmentDTO {
 	public void setId(Integer id) {
 		Id = id;
 	}
+
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private Integer userId;
+	private Integer exemplaryId;
 
 	public LocalDate getStartDate() {
 		return startDate;
@@ -29,6 +32,22 @@ public class AppointmentDTO {
 
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getExemplaryId() {
+		return exemplaryId;
+	}
+
+	public void setExemplaryId(Integer exemplaryId) {
+		this.exemplaryId = exemplaryId;
 	}
 
 }

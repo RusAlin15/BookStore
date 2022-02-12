@@ -31,7 +31,11 @@ public class ExemplaryService {
 	}
 
 	public void deleteExemplary(Integer exemplaryId) {
-		exemplaryRepository.deleteById(exemplaryId);
+		try {
+			exemplaryRepository.deleteById(exemplaryId);
+		} catch (Exception e) {
+			throw new ResourceNotFoundException("Exemplary", "Id", exemplaryId);
+		}
 	}
 
 	public List<Exemplary> findExemplariesByBookId(Integer bookId) {
@@ -41,12 +45,6 @@ public class ExemplaryService {
 		 * administartion.exemplary INNER JOIN administration.book ON exemplary.book_id
 		 * = book.id WHERE book.id = :bookId
 		 */
-	}
-
-	public Exemplary createExemplary(Integer publisingHouseId, Exemplary exemplary) {
-		PublishingHouse publishingHouse = publishingHouseService.getPublishingHouseById(publisingHouseId);
-		exemplary.setPublishingHouse(publishingHouse);
-		return exemplaryRepository.saveAndFlush(exemplary);
 	}
 
 	public List<Exemplary> getExemplaries() {

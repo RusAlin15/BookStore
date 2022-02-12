@@ -3,23 +3,17 @@ package com.application.book.dto;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.application.author.dto.SimpleAuthorDto;
 import com.application.enums.LiteraryCategory;
 
-public class BookCreateDTO {
+public class BookDto {
 	private Integer id;
 	private String title;
 	private LocalDate year;
 	private String isbn;
 	private LiteraryCategory category;
-	private Set<Integer> authorIds;
 
-	public Set<Integer> getAuthorIds() {
-		return authorIds;
-	}
-
-	public void setAuthorIds(Set<Integer> authorIds) {
-		this.authorIds = authorIds;
-	}
+	private Set<SimpleAuthorDto> authors;
 
 	public Integer getId() {
 		return id;
@@ -59,6 +53,14 @@ public class BookCreateDTO {
 
 	public void setCategory(LiteraryCategory category) {
 		this.category = category;
+	}
+
+	public Set<SimpleAuthorDto> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(Set<SimpleAuthorDto> authors) {
+		this.authors = authors;
 	}
 
 }

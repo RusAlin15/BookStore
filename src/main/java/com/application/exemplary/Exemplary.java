@@ -33,13 +33,13 @@ public class Exemplary {
 	@Column(name = "published_date", nullable = false)
 	private LocalDate publishedDate;
 
-	@Column(name = "code", nullable = false)
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
-	@Column(name = "page_numbers", nullable = false)
+	@Column(name = "page_numbers")
 	private Integer pageNumbers;
 
-	@Column(name = "language")
+	@Column(name = "language", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Language language;
 

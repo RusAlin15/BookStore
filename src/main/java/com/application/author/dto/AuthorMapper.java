@@ -3,38 +3,54 @@ package com.application.author.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.application.author.Author;
+import com.application.book.dto.BookMapper;
 
 @Component
 public class AuthorMapper {
 
-	public Author authorDTO2author(AuthorDTO authorDTO) {
+	@Autowired
+	BookMapper bookMapper;
+
+	public Author authorCreateDto2author(AuthorCreateDto authorCreateDto) {
 		Author author = new Author();
-		author.setId(authorDTO.getId());
-		author.setBirthDate(authorDTO.getBirthDate());
-		author.setDeathDate(authorDTO.getDeathDate());
-		author.setGender(authorDTO.getGender());
-		author.setName(authorDTO.getName());
-		author.setNationality(authorDTO.getNationality());
+		author.setId(authorCreateDto.getId());
+		author.setBirthDate(authorCreateDto.getBirthDate());
+		author.setDeathDate(authorCreateDto.getDeathDate());
+		author.setGender(authorCreateDto.getGender());
+		author.setName(authorCreateDto.getName());
+		author.setNationality(authorCreateDto.getNationality());
 		return author;
 	}
 
-	public AuthorDTO author2authorDTO(Author author) {
-		AuthorDTO authorDTO = new AuthorDTO();
-		authorDTO.setId(author.getId());
-		authorDTO.setBirthDate(author.getBirthDate());
-		authorDTO.setDeathDate(author.getDeathDate());
-		authorDTO.setGender(author.getGender());
-		authorDTO.setName(author.getName());
-		authorDTO.setNationality(author.getNationality());
-		return authorDTO;
+	public AuthorDto author2authorDto(Author author) {
+		AuthorDto authorDto = new AuthorDto();
+		authorDto.setId(author.getId());
+		authorDto.setBirthDate(author.getBirthDate());
+		authorDto.setDeathDate(author.getDeathDate());
+		authorDto.setGender(author.getGender());
+		authorDto.setName(author.getName());
+		authorDto.setNationality(author.getNationality());
+		authorDto.setBooksDto(author.getBooks().stream().map((book) -> bookMapper.book2SimpleBookDto(book))
+				.collect(Collectors.toSet()));
+
+		return authorDto;
 	}
 
-	public List<AuthorDTO> authorList2authorListDTO(List<Author> authors) {
+	public List<AuthorDto> authorList2authorListDto(List<Author> list) {
 
-		return authors.stream().map(this::author2authorDTO).collect(Collectors.toList());
+		return list.stream().map(this::author2authorDto).collect(Collectors.toList());
+	}
+
+	public SimpleAuthorDto author2SimpleAuthorDto(Author author) {
+		SimpleAuthorDto simpleAuthorDto = new SimpleAuthorDto();
+		simpleAuthorDto.setId(author.getId());
+		simpleAuthorDto.setName(author.getName());
+
+		return simpleAuthorDto;
 	}
 
 }

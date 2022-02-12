@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.exception.ResourceNotFoundException;
-import com.application.exemplary.dto.ExemplaryDTO;
+import com.application.exemplary.dto.ExemplaryCreateDto;
+import com.application.exemplary.dto.ExemplaryDto;
 import com.application.exemplary.dto.ExemplaryMapper;
 
 @RestController
@@ -27,39 +28,33 @@ public class ExemplaryController {
 	@Autowired
 	private ExemplaryMapper exemplaryMapper;
 
-	@PostMapping("/{bookId}/{publisingHouseId}")
-	public ResponseEntity<ExemplaryDTO> createExemplary(@PathVariable Integer bookId,
-			@PathVariable Integer publisingHouseId, @RequestBody ExemplaryDTO exemplaryDTO)
+	@PostMapping
+	public ResponseEntity<ExemplaryDto> createExemplary(@RequestBody ExemplaryCreateDto exemplaryCreateDto)
 			throws ResourceNotFoundException {
-		Exemplary createdExemplary = exemplaryService.createExemplary(bookId, publisingHouseId,
-				exemplaryMapper.exemplaryDTO2Exemplary(exemplaryDTO));
-		return new ResponseEntity<ExemplaryDTO>(exemplaryMapper.exemplary2ExemplaryDTO(createdExemplary),
+		Exemplary exemplary = exemplaryMapper.exemplaryCreateDto2Exemplary(exemplaryCreateDto);
+
+		return new ResponseEntity<ExemplaryDto>(exemplaryMapper.exemplary2ExemplaryDto(exemplaryService
+				.createExemplary(exemplaryCreateDto.getBookId(), exemplaryCreateDto.getPublishingHouseId(), exemplary)),
 				HttpStatus.CREATED);
 	}
 
-	@PostMapping("/{publisingHouseId}")
-	public ResponseEntity<ExemplaryDTO> createExemplary(@PathVariable Integer publisingHouseId,
-			@RequestBody ExemplaryDTO exemplaryDTO) throws ResourceNotFoundException {
-		Exemplary createdExemplary = exemplaryService.createExemplary(publisingHouseId,
-				exemplaryMapper.exemplaryDTO2Exemplary(exemplaryDTO));
-		return new ResponseEntity<ExemplaryDTO>(exemplaryMapper.exemplary2ExemplaryDTO(createdExemplary),
-				HttpStatus.CREATED);
-	}
-
-	@GetMapping("/list/{bookId}")
-	public List<ExemplaryDTO> findExemplariesByBookId(@PathVariable Integer bookId) {
-		return exemplaryMapper.exemplaryList2ExemplaryDTOList(exemplaryService.findExemplariesByBookId(bookId));
+	@GetMapping("/by-id/{bookId}")
+	public ResponseEntity<List<ExemplaryDto>> findExemplariesByBookId(@PathVariable Integer bookId) {
+		return new ResponseEntity<List<ExemplaryDto>>(
+				exemplaryMapper.exemplaryList2ExemplaryDtoList(exemplaryService.findExemplariesByBookId(bookId)),
+				HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{exemplaryId}")
-	public void deleteExemplary(@PathVariable Integer exemplaryId) {
+	public ResponseEntity<String> deleteExemplary(@PathVariable Integer exemplaryId) {
 		exemplaryService.deleteExemplary(exemplaryId);
+		return new ResponseEntity<String>("Exemplary " + exemplaryId + " succesfuly deleted!", HttpStatus.OK);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ExemplaryDTO>> getExemplaries() {
-		return new ResponseEntity<List<ExemplaryDTO>>(
-				exemplaryMapper.exemplaryList2Exemplary(exemplaryService.getExemplaries()), HttpStatus.OK);
+	public ResponseEntity<List<ExemplaryDto>> getExemplaries() {
+		return new ResponseEntity<List<ExemplaryDto>>(
+				exemplaryMapper.exemplaryList2ExemplaryDto(exemplaryService.getExemplaries()), HttpStatus.OK);
 	}
 
 }

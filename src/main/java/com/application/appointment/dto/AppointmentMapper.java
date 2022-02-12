@@ -7,22 +7,22 @@ import com.application.appointment.Appointment;
 @Component
 public class AppointmentMapper {
 
-	public Appointment appointmentDTOToAppointment(AppointmentDTO appointmentDTO) {
+	public Appointment appointmentDto2Appointment(AppointmentCreateDto appointmentDto) {
 		Appointment appointment = new Appointment();
 
-		appointment.setId(appointmentDTO.getId());
-		appointment.setStartDate(appointmentDTO.getStartDate());
-		appointment.setEndDate(appointmentDTO.getEndDate());
+		appointment.setId(appointmentDto.getId());
+		appointment.setStartDate(appointmentDto.getStartDate());
+		appointment.setEndDate(appointmentDto.getEndDate());
 		return appointment;
 	}
 
-	public AppointmentDTO appointmentToAppointmentDTO(Appointment appointment) {
-		AppointmentDTO appointmentDTO = new AppointmentDTO();
+	public AppointmentDto appointment2AppointmentDto(Appointment appointment) {
+		AppointmentDto appointmentDto = new AppointmentDto();
 
-		appointmentDTO.setId(appointment.getId());
-		appointmentDTO.setStartDate(appointment.getStartDate());
-		appointmentDTO.setEndDate(appointment.getEndDate());
-		return appointmentDTO;
+		appointmentDto.setId(appointment.getId());
+		appointmentDto.setStartDate(appointment.getStartDate());
+		appointmentDto.setEndDate(appointment.getEndDate());
+		return appointmentDto;
 	}
 
 }

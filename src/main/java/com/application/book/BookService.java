@@ -26,7 +26,7 @@ public class BookService {
 		}
 
 		authors.forEach(author -> author.addBook(book));
-		book.setLinkedAuthors(authors);
+		book.setAuthors(authors);
 
 		return bookRepository.saveAndFlush(book);
 	}
@@ -40,6 +40,11 @@ public class BookService {
 	}
 
 	public void deleteBookById(Integer id) {
+		Book book = this.getBookById(id);
+
+		Set<Author> authors = book.getAuthors();
+		authors.forEach((author) -> author.removeBook(book));
+
 		bookRepository.deleteById(id);
 	}
 

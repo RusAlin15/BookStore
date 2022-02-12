@@ -10,24 +10,24 @@ import com.application.publishing.PublishingHouse;
 @Component
 public class PublishingHouseMapper {
 
-	public PublishingHouse houseDTO2House(PublishingHouseDTO houseDTO) {
+	public PublishingHouse houseDto2House(PublishingHouseDto houseDto) {
 		PublishingHouse house = new PublishingHouse();
-		house.setId(houseDTO.getId());
-		house.setName(houseDTO.getName());
-		house.setAddress(houseDTO.getAddress());
+		house.setId(houseDto.getId());
+		house.setName(houseDto.getName());
+		house.setAddress(houseDto.getAddress());
 		return house;
 	}
 
-	public PublishingHouseDTO house2houseDTO(PublishingHouse house) {
-		PublishingHouseDTO houseDTO = new PublishingHouseDTO();
-		houseDTO.setId(house.getId());
-		houseDTO.setName(house.getName());
-		houseDTO.setAddress(house.getAddress());
-		return houseDTO;
+	public PublishingHouseDto house2houseDto(PublishingHouse house) {
+		PublishingHouseDto houseDto = new PublishingHouseDto();
+		houseDto.setId(house.getId());
+		houseDto.setName(house.getName());
+		houseDto.setAddress(house.getAddress());
+		return houseDto;
 	}
 
-	public List<PublishingHouseDTO> houseList2HouseListDTO(List<PublishingHouse> allHouses) {
-		return allHouses.stream().map(this::house2houseDTO).collect(Collectors.toList());
+	public List<PublishingHouseDto> houseList2HouseListDto(List<PublishingHouse> allHouses) {
+		return allHouses.stream().map(this::house2houseDto).collect(Collectors.toList());
 	}
 
 }

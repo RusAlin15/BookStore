@@ -8,4 +8,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 	public List<Book> findByTitle(String title);
 
 	public List<Book> findAllByTitle(String title);
+
 }

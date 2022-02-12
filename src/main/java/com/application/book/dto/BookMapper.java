@@ -1,42 +1,61 @@
 package com.application.book.dto;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.application.author.dto.AuthorMapper;
 import com.application.book.Book;
 
 @Component
 public class BookMapper {
 
-	public BookDTO book2BookDTO(Book book) {
-		BookDTO bookDTO = new BookDTO();
-		bookDTO.setId(book.getId());
-		bookDTO.setTitle(book.getTitle());
-		bookDTO.setIsbn(book.getIsbn());
-		bookDTO.setYear(book.getYearBook());
-		bookDTO.setCategory(book.getCategory());
+	private AuthorMapper authorMapper = new AuthorMapper();
 
-		Set<String> authorsNames = book.getLinkedAuthors().stream().map(author -> author.getName())
-				.collect(Collectors.toSet());
+	public BookDto book2BookDto(Book book) {
+		BookDto bookDto = new BookDto();
+		bookDto.setId(book.getId());
+		bookDto.setTitle(book.getTitle());
+		bookDto.setIsbn(book.getIsbn());
+		bookDto.setYear(book.getYearBook());
+		bookDto.setCategory(book.getCategory());
+		bookDto.setAuthors(book.getAuthors().stream().map((author) -> authorMapper.author2SimpleAuthorDto(author))
+				.collect(Collectors.toSet()));
 
-		bookDTO.setAuthors(authorsNames);
-		return bookDTO;
+		return bookDto;
 	}
 
-	public List<BookDTO> bookList2BookListDTO(List<Book> books) {
-		return books.stream().map(this::book2BookDTO).collect(Collectors.toList());
+	public List<BookDto> bookList2BookListDto(List<Book> books) {
+		return books.stream().map(this::book2BookDto).collect(Collectors.toList());
 	}
 
-	public Book bookCreateDTO2Book(BookCreateDTO bookCreateDTO) {
+	public Book bookCreateDto2Book(BookCreateDto bookCreateDto) {
 		Book book = new Book();
-		book.setTitle(bookCreateDTO.getTitle());
-		book.setYearBook(bookCreateDTO.getYear());
-		book.setIsbn(bookCreateDTO.getIsbn());
-		book.setCategory(bookCreateDTO.getCategory());
+		book.setTitle(bookCreateDto.getTitle());
+		book.setYearBook(bookCreateDto.getYear());
+		book.setIsbn(bookCreateDto.getIsbn());
+		book.setCategory(bookCreateDto.getCategory());
+
 		return book;
 	}
 
+	public SimpleBookDto book2SimpleBookDto(Book book) {
+		SimpleBookDto simpleBookDto = new SimpleBookDto();
+
+		simpleBookDto.setId(book.getId());
+		simpleBookDto.setTitle(book.getTitle());
+
+		return simpleBookDto;
+	}
+
+	public ExemplaryBookDto book2ExemplaryeBookDto(Book book) {
+		ExemplaryBookDto exemplaryBookDto = new ExemplaryBookDto();
+
+		exemplaryBookDto.setSimpleBookDto(this.book2SimpleBookDto(book));
+		exemplaryBookDto.setSimpleAuthorsDto(book.getAuthors().stream()
+				.map((author) -> authorMapper.author2SimpleAuthorDto(author)).collect(Collectors.toSet()));
+
+		return exemplaryBookDto;
+	}
 }

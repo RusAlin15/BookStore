@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.author.dto.AuthorDTO;
+import com.application.author.dto.AuthorCreateDto;
+import com.application.author.dto.AuthorDto;
 import com.application.author.dto.AuthorMapper;
 import com.application.exception.ResourceNotFoundException;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping("/author")
 public class AuthorController {
 
 	@Autowired
@@ -28,51 +29,58 @@ public class AuthorController {
 	private AuthorMapper authorMapper;
 
 	@PostMapping
-	public ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO authorDTO) {
-		Author author = authorService.createAuthor(authorMapper.authorDTO2author(authorDTO));
-		return new ResponseEntity<AuthorDTO>(authorMapper.author2authorDTO(author), HttpStatus.CREATED);
+	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorCreateDto authorCreateDto) {
+		Author author = authorService.createAuthor(authorMapper.authorCreateDto2author(authorCreateDto));
+		return new ResponseEntity<AuthorDto>(authorMapper.author2authorDto(author), HttpStatus.CREATED);
 	}
 
 	@GetMapping()
-	public List<AuthorDTO> getAllAuthor() {
-		return authorMapper.authorList2authorListDTO(authorService.getAllAuthor());
+	public ResponseEntity<List<AuthorDto>> getAllAuthor() {
+		return new ResponseEntity<List<AuthorDto>>(authorMapper.authorList2authorListDto(authorService.getAllAuthor()),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/id/{id}")
-	public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Integer id) {
-		return new ResponseEntity<AuthorDTO>(authorMapper.author2authorDTO(authorService.getAuthorById(id)),
+	public ResponseEntity<AuthorDto> getAuthorById(@PathVariable Integer id) {
+		return new ResponseEntity<AuthorDto>(authorMapper.author2authorDto(authorService.getAuthorById(id)),
 				HttpStatus.OK);
 	}
 
 	@GetMapping("/name/{name}")
-	public AuthorDTO getAuthorByname(@PathVariable String name) {
-		return authorMapper.author2authorDTO(authorService.getAuthorByName(name));
+	public ResponseEntity<AuthorDto> getAuthorByname(@PathVariable String name) {
+		return new ResponseEntity<AuthorDto>(authorMapper.author2authorDto(authorService.getAuthorByName(name)),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/alive")
-	public List<AuthorDTO> getAliveAuthors() {
-		return authorMapper.authorList2authorListDTO(authorService.getAliveAuthors());
+	public ResponseEntity<List<AuthorDto>> getAliveAuthors() {
+		return new ResponseEntity<List<AuthorDto>>(
+				authorMapper.authorList2authorListDto(authorService.getAliveAuthors()), HttpStatus.OK);
 	}
 
 	@GetMapping("/dead")
-	public List<AuthorDTO> getDeadAuthors() {
-		return authorMapper.authorList2authorListDTO(authorService.getDeadAuthors());
+	public ResponseEntity<List<AuthorDto>> getDeadAuthors() {
+		return new ResponseEntity<List<AuthorDto>>(
+				authorMapper.authorList2authorListDto(authorService.getDeadAuthors()), HttpStatus.OK);
 	}
 
 	@GetMapping("/nationality/{nationality}")
-	public List<AuthorDTO> getByNationality(@PathVariable String nationality) {
-		return authorMapper.authorList2authorListDTO(authorService.getAllByNationality(nationality));
+	public ResponseEntity<List<AuthorDto>> getByNationality(@PathVariable String nationality) {
+		return new ResponseEntity<List<AuthorDto>>(
+				authorMapper.authorList2authorListDto(authorService.getAllByNationality(nationality)), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
-	public AuthorDTO updateAuthor(@RequestBody AuthorDTO authorDTO, @PathVariable Integer id)
-			throws ResourceNotFoundException {
-		Author author = authorMapper.authorDTO2author(authorDTO);
-		return authorMapper.author2authorDTO(authorService.updateAuthorById(author, id));
+	public ResponseEntity<AuthorDto> updateAuthor(@RequestBody AuthorCreateDto authorCreateDto,
+			@PathVariable Integer id) throws ResourceNotFoundException {
+		Author author = authorMapper.authorCreateDto2author(authorCreateDto);
+		return new ResponseEntity<AuthorDto>(authorMapper.author2authorDto(authorService.updateAuthorById(author, id)),
+				HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteAuthorById(@PathVariable Integer id) {
+	public ResponseEntity<String> deleteAuthorById(@PathVariable Integer id) {
 		authorService.deleteAuthorById(id);
+		return new ResponseEntity<String>("Author " + id + " succesfuly deleted!", HttpStatus.OK);
 	}
 }

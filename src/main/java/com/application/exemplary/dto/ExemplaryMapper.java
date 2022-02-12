@@ -3,37 +3,46 @@ package com.application.exemplary.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.application.book.dto.BookMapper;
 import com.application.exemplary.Exemplary;
 
 @Component
 public class ExemplaryMapper {
-	public ExemplaryDTO exemplary2ExemplaryDTO(Exemplary exemplary) {
-		ExemplaryDTO exemplaryDTO = new ExemplaryDTO();
-		exemplaryDTO.setId(exemplary.getId());
-		exemplaryDTO.setPublishedDate(exemplary.getPublishedDate());
-		exemplaryDTO.setCode(exemplary.getCode());
-		exemplaryDTO.setPageNumbers(exemplary.getPageNumbers());
-		exemplaryDTO.setLanguage(exemplary.getLanguage());
-		return exemplaryDTO;
+
+	@Autowired
+	private BookMapper bookMapper;
+
+	public ExemplaryDto exemplary2ExemplaryDto(Exemplary exemplary) {
+		ExemplaryDto exemplaryDto = new ExemplaryDto();
+		exemplaryDto.setId(exemplary.getId());
+		exemplaryDto.setPublishedDate(exemplary.getPublishedDate());
+		exemplaryDto.setCode(exemplary.getCode());
+		exemplaryDto.setPageNumbers(exemplary.getPageNumbers());
+		exemplaryDto.setLanguage(exemplary.getLanguage());
+		exemplaryDto.setBookDto(bookMapper.book2ExemplaryeBookDto(exemplary.getBook()));
+
+		return exemplaryDto;
 	}
 
-	public List<ExemplaryDTO> exemplaryList2ExemplaryDTOList(List<Exemplary> exemplaryList) {
-		return exemplaryList.stream().map(exemplary -> exemplary2ExemplaryDTO(exemplary)).collect(Collectors.toList());
+	public List<ExemplaryDto> exemplaryList2ExemplaryDtoList(List<Exemplary> exemplaryList) {
+		return exemplaryList.stream().map(exemplary -> exemplary2ExemplaryDto(exemplary)).collect(Collectors.toList());
 	}
 
-	public Exemplary exemplaryDTO2Exemplary(ExemplaryDTO exemplaryDTO) {
+	public Exemplary exemplaryCreateDto2Exemplary(ExemplaryCreateDto exemplaryCreateDto) {
 		Exemplary exemplary = new Exemplary();
-		exemplary.setId(exemplaryDTO.getId());
-		exemplary.setPublishedDate(exemplaryDTO.getPublishedDate());
-		exemplary.setCode(exemplaryDTO.getCode());
-		exemplary.setPageNumbers(exemplaryDTO.getPageNumbers());
-		exemplary.setLanguage(exemplaryDTO.getLanguage());
+		exemplary.setId(exemplaryCreateDto.getId());
+		exemplary.setPublishedDate(exemplaryCreateDto.getPublishedDate());
+		exemplary.setCode(exemplaryCreateDto.getCode());
+		exemplary.setPageNumbers(exemplaryCreateDto.getPageNumbers());
+		exemplary.setLanguage(exemplaryCreateDto.getLanguage());
 		return exemplary;
 	}
 
-	public List<ExemplaryDTO> exemplaryList2Exemplary(List<Exemplary> exemplaries) {
-		return exemplaries.stream().map(this::exemplary2ExemplaryDTO).collect(Collectors.toList());
+	public List<ExemplaryDto> exemplaryList2ExemplaryDto(List<Exemplary> exemplaries) {
+		return exemplaries.stream().map(this::exemplary2ExemplaryDto).collect(Collectors.toList());
 	}
+
 }
