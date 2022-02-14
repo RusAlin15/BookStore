@@ -1,5 +1,6 @@
 package com.application.exemplary;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,13 @@ public class ExemplaryController {
 				exemplaryMapper.exemplaryList2ExemplaryDto(exemplaryService.getExemplaries()), HttpStatus.OK);
 	}
 
+	@GetMapping("/free/{bookId}/{strStartDate}/{strEndDate}")
+	public ResponseEntity<List<ExemplaryDto>> getFreeExemplaries(@PathVariable Integer bookId,
+			@PathVariable String strStartDate, @PathVariable String strEndDate) {
+		LocalDate startDate = LocalDate.parse(strStartDate);
+		LocalDate endDate = LocalDate.parse(strEndDate);
+		List<Exemplary> exemplaries = exemplaryService.getFreeExemplaries(bookId, startDate, endDate);
+		return new ResponseEntity<List<ExemplaryDto>>(exemplaryMapper.exemplaryList2ExemplaryDto(exemplaries),
+				HttpStatus.OK);
+	}
 }

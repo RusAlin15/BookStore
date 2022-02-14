@@ -40,6 +40,18 @@ public class AuthorMapper {
 		return authorDto;
 	}
 
+	public AuthorCreateDto author2authorCreateDto(Author author) {
+		AuthorCreateDto authorCreateDto = new AuthorCreateDto();
+		authorCreateDto.setId(author.getId());
+		authorCreateDto.setBirthDate(author.getBirthDate());
+		authorCreateDto.setDeathDate(author.getDeathDate());
+		authorCreateDto.setGender(author.getGender());
+		authorCreateDto.setName(author.getName());
+		authorCreateDto.setNationality(author.getNationality());
+
+		return authorCreateDto;
+	}
+
 	public List<AuthorDto> authorList2authorListDto(List<Author> list) {
 
 		return list.stream().map(this::author2authorDto).collect(Collectors.toList());

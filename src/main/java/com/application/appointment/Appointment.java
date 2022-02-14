@@ -75,4 +75,10 @@ public class Appointment {
 		this.user = user;
 	}
 
+	public boolean isBetween(LocalDate startDate, LocalDate endDate) {
+		if (this.startDate.isBefore(endDate) && this.endDate.isAfter(startDate))
+			return true;
+		return false;
+	}
+
 }

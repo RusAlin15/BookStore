@@ -49,8 +49,8 @@ public class BookMapper {
 		return simpleBookDto;
 	}
 
-	public ExemplaryBookDto book2ExemplaryeBookDto(Book book) {
-		ExemplaryBookDto exemplaryBookDto = new ExemplaryBookDto();
+	public BookExemplaryDto book2ExemplaryeBookDto(Book book) {
+		BookExemplaryDto exemplaryBookDto = new BookExemplaryDto();
 
 		exemplaryBookDto.setSimpleBookDto(this.book2SimpleBookDto(book));
 		exemplaryBookDto.setSimpleAuthorsDto(book.getAuthors().stream()

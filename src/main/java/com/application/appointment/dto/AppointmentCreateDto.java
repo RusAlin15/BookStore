@@ -3,7 +3,12 @@ package com.application.appointment.dto;
 import java.time.LocalDate;
 
 public class AppointmentCreateDto {
+
 	private Integer Id;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private Integer userId;
+	private Integer exemplaryId;
 
 	public Integer getId() {
 		return Id;
@@ -12,11 +17,6 @@ public class AppointmentCreateDto {
 	public void setId(Integer id) {
 		Id = id;
 	}
-
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private Integer userId;
-	private Integer exemplaryId;
 
 	public LocalDate getStartDate() {
 		return startDate;

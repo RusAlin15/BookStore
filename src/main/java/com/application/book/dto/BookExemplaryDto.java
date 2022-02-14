@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.application.author.dto.SimpleAuthorDto;
 
-public class ExemplaryBookDto {
+public class BookExemplaryDto {
 
 	private SimpleBookDto book;
 	private Set<SimpleAuthorDto> authors;

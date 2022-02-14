@@ -2,7 +2,7 @@ package com.application.exemplary.dto;
 
 import java.time.LocalDate;
 
-import com.application.book.dto.ExemplaryBookDto;
+import com.application.book.dto.BookExemplaryDto;
 import com.application.enums.Language;
 
 public class ExemplaryDto {
@@ -11,7 +11,7 @@ public class ExemplaryDto {
 	private Integer pageNumbers;
 	private Language language;
 	private LocalDate publishedDate;
-	private ExemplaryBookDto bookDto;
+	private BookExemplaryDto bookDto;
 
 	public Integer getId() {
 		return id;
@@ -53,11 +53,11 @@ public class ExemplaryDto {
 		this.language = language;
 	}
 
-	public ExemplaryBookDto getBookDto() {
+	public BookExemplaryDto getBookDto() {
 		return bookDto;
 	}
 
-	public void setBookDto(ExemplaryBookDto bookDto) {
+	public void setBookDto(BookExemplaryDto bookDto) {
 		this.bookDto = bookDto;
 	}
 

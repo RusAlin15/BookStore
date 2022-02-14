@@ -29,9 +29,9 @@ public class AuthorController {
 	private AuthorMapper authorMapper;
 
 	@PostMapping
-	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorCreateDto authorCreateDto) {
+	public ResponseEntity<AuthorCreateDto> createAuthor(@RequestBody AuthorCreateDto authorCreateDto) {
 		Author author = authorService.createAuthor(authorMapper.authorCreateDto2author(authorCreateDto));
-		return new ResponseEntity<AuthorDto>(authorMapper.author2authorDto(author), HttpStatus.CREATED);
+		return new ResponseEntity<AuthorCreateDto>(authorMapper.author2authorCreateDto(author), HttpStatus.CREATED);
 	}
 
 	@GetMapping()

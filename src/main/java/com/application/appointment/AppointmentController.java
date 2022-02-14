@@ -1,8 +1,11 @@
 package com.application.appointment;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,20 +24,18 @@ public class AppointmentController {
 	@Autowired
 	private AppointmentMapper appointmentMapper;
 
-//	@GetMapping("/find-free")
-//	@ResponseBody
-//	public ResponseEntity<Set<AppointmentDto>> getFreeBooks(@RequestParam LocalDate startDate,
-//			@RequestParam LocalDate endDate) {
-//
-//	}
-
 	@PostMapping
 	public ResponseEntity<AppointmentDto> createAppointment(@RequestBody AppointmentCreateDto appointmentDto) {
-
 		Appointment appointment = appointmentMapper.appointmentDto2Appointment(appointmentDto);
-
 		return new ResponseEntity<AppointmentDto>(appointmentMapper.appointment2AppointmentDto(appointmentService
 				.createAppointment(appointment, appointmentDto.getUserId(), appointmentDto.getExemplaryId())),
+				HttpStatus.OK);
+	}
+
+	@GetMapping()
+	public ResponseEntity<List<AppointmentDto>> getAppointments() {
+		return new ResponseEntity<List<AppointmentDto>>(
+				appointmentMapper.appointmentList2AppointmentDtoList(appointmentService.getAppointments()),
 				HttpStatus.OK);
 	}
 

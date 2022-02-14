@@ -54,6 +54,7 @@ public class BookService {
 		bookUpdate.setYearBook(book.getYearBook());
 		bookUpdate.setIsbn(book.getIsbn());
 		bookRepository.flush();
+
 		return bookUpdate;
 	}
 

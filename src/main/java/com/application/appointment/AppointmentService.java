@@ -1,5 +1,7 @@
 package com.application.appointment;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,10 @@ public class AppointmentService {
 		exemplary.addAppointment(appointment);
 
 		return appointmentRepository.saveAndFlush(appointment);
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointmentRepository.findAll();
 	}
 
 }
