@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
@@ -14,7 +15,7 @@ import com.application.exemplary.Exemplary;
 import com.application.user.User;
 
 @Entity
-@Table(name = "appointments", schema = "administration")
+@Table(name = "appointment", schema = "administration")
 public class Appointment {
 
 	@javax.persistence.Id
@@ -27,11 +28,11 @@ public class Appointment {
 	@Column(name = "end_date")
 	private LocalDate endDate;
 
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "exemplary_id")
 	private Exemplary exemplary;
 
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 

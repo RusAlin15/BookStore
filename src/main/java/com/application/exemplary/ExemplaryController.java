@@ -58,12 +58,15 @@ public class ExemplaryController {
 				exemplaryMapper.exemplaryList2ExemplaryDto(exemplaryService.getExemplaries()), HttpStatus.OK);
 	}
 
+//	/freeExemplary?bookId=1234&startDate=2022-01-01&endDate=2022-01-10
 	@GetMapping("/free/{bookId}/{strStartDate}/{strEndDate}")
 	public ResponseEntity<List<ExemplaryDto>> getFreeExemplaries(@PathVariable Integer bookId,
 			@PathVariable String strStartDate, @PathVariable String strEndDate) {
+
 		LocalDate startDate = LocalDate.parse(strStartDate);
 		LocalDate endDate = LocalDate.parse(strEndDate);
 		List<Exemplary> exemplaries = exemplaryService.getFreeExemplaries(bookId, startDate, endDate);
+
 		return new ResponseEntity<List<ExemplaryDto>>(exemplaryMapper.exemplaryList2ExemplaryDto(exemplaries),
 				HttpStatus.OK);
 	}

@@ -1,5 +1,6 @@
 package com.application.appointment;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,4 +40,7 @@ public class AppointmentController {
 				HttpStatus.OK);
 	}
 
+	public ResponseEntity<FileNotFoundException> handleException(FileNotFoundException exception) {
+		return new ResponseEntity<FileNotFoundException>(exception, HttpStatus.NOT_FOUND);
+	}
 }

@@ -23,14 +23,14 @@ public class PublishingHouseService {
 
 	public PublishingHouse getPublishingHouseById(Integer publishingHouseId) {
 		return houseRepository.findById(publishingHouseId)
-				.orElseThrow(() -> new ResourceNotFoundException("PublishingHouse", "Id", publishingHouseId));
+				.orElseThrow(() -> new ResourceNotFoundException("Publishing House not found!"));
 	}
 
 	public void deleteHouseById(Integer publishingHouseId) {
 		try {
 			houseRepository.deleteById(publishingHouseId);
 		} catch (Exception e) {
-			throw new ResourceNotFoundException("PublishingHouse", "Id", publishingHouseId);
+			throw new ResourceNotFoundException("Publising House not found!");
 		}
 	}
 }

@@ -1,11 +1,13 @@
 package com.application.author;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,5 +84,10 @@ public class AuthorController {
 	public ResponseEntity<String> deleteAuthorById(@PathVariable Integer id) {
 		authorService.deleteAuthorById(id);
 		return new ResponseEntity<String>("Author " + id + " succesfuly deleted!", HttpStatus.OK);
+	}
+
+	@ExceptionHandler
+	public ResponseEntity<FileNotFoundException> handleException(FileNotFoundException exception) {
+		return new ResponseEntity<FileNotFoundException>(exception, HttpStatus.NOT_FOUND);
 	}
 }

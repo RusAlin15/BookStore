@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import com.application.appointment.Appointment;
@@ -21,7 +22,7 @@ import com.application.book.Book;
 import com.application.enums.Language;
 import com.application.publishing.PublishingHouse;
 
-@Entity(name = "exemplary")
+@Entity()
 @Table(name = "exemplary", schema = "administration")
 public class Exemplary {
 
@@ -51,7 +52,8 @@ public class Exemplary {
 	@JoinColumn(name = "publishing_house_id")
 	private PublishingHouse publishingHouse;
 
-	@OneToMany(mappedBy = "exemplary", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "exemplary", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REMOVE }, orphanRemoval = true)
 	private Set<Appointment> appointments;
 
 	public Integer getId() {
@@ -120,6 +122,11 @@ public class Exemplary {
 
 	public void addAppointment(Appointment appointment) {
 		this.appointments.add(appointment);
+	}
+
+	@PreRemove
+	public void delete() {
+		this.book.removeExemplary(this);
 	}
 
 }

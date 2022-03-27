@@ -37,10 +37,11 @@ public class Book {
 	@Column(name = "literary_category", nullable = false)
 	private LiteraryCategory category;
 
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "book", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REMOVE }, orphanRemoval = true)
 	private Set<Exemplary> exemplaries;
 
-	@ManyToMany(mappedBy = "books")
+	@ManyToMany(mappedBy = "books", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	private Set<Author> authors;
 
 	public void addExemplary(Exemplary exemplary) {

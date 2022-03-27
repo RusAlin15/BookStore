@@ -22,7 +22,7 @@ public class BookService {
 		Set<Author> authors = authorRepository.findByIdIn(authorIds);
 
 		if (authorIds.size() != authors.size()) {
-			throw new ResourceNotFoundException("Author", "Ids", authorIds);
+			throw new ResourceNotFoundException("Author not found!");
 		}
 
 		authors.forEach(author -> author.addBook(book));
@@ -36,7 +36,7 @@ public class BookService {
 	}
 
 	public Book getBookById(Integer id) throws ResourceNotFoundException {
-		return bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book", "Id", id));
+		return bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found!"));
 	}
 
 	public void deleteBookById(Integer id) {
